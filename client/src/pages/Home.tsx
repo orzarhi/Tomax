@@ -1,10 +1,20 @@
 import { Badges, CardDisplay, InputSearch, SkeletonCard } from '@/components';
+import { useDebounce } from '@/hooks/use-debounce';
 import { useNews } from '@/hooks/use-news';
 import { NewsType } from '@/types/news';
+import { useState } from 'react';
 
 export const Home = () => {
-    const { mutate: news, isPending, data } = useNews();
-    console.log("🚀 ~ Home ~ data:", data)
+    const [searchText, setSearchText] = useState<string>('')
+
+    const debouncedSearch = useDebounce(searchText);
+    const { mutate: chooseCategory, data, isPending } = useNews();
+
+    const filteredData = data?.filter((article: NewsType) => {
+        return article.title.toLowerCase().includes(debouncedSearch.toLocaleLowerCase())
+    })
+
+    const isDataEmpty = !filteredData?.length && !isPending;
 
     if (isPending) {
         return (
@@ -21,11 +31,12 @@ export const Home = () => {
             <InputSearch
                 placeholder="Search Text..."
                 className='w-1/2 px-4 py-2 mt-4 mb-8'
+                setSearchText={setSearchText}
             />
-            <Badges news={news} />
-            <h1 className='my-4 text-4xl font-bold'>News</h1>
+            {isDataEmpty ? <Badges chooseCategory={chooseCategory} /> : null}
+            {isDataEmpty ? <h1 className='my-4 text-4xl font-bold'>News</h1> : <h1 className='mt-12 text-4xl font-medium'>No News Found ☹</h1>}
             <article className='flex flex-wrap gap-2'>
-                {data?.map((article: NewsType) => (
+                {filteredData?.map((article: NewsType) => (
                     <CardDisplay
                         key={article.id}
                         title={article.title}

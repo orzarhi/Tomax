@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface CardDisplayProps {
@@ -10,7 +9,7 @@ interface CardDisplayProps {
 
 export const CardDisplay = ({ title, description, urlToImage }: CardDisplayProps) => {
     return (
-        <Card className="w-full max-w-sm mx-auto">
+        <Card className="w-full max-w-sm mx-auto shadow-sm cursor-pointer hover:shadow-black/70 hover:shadow-sm">
             <div className="p-4">
                 <CardHeader className="pb-6">
                     <CardTitle>{title}</CardTitle>
@@ -25,9 +24,8 @@ export const CardDisplay = ({ title, description, urlToImage }: CardDisplayProps
                         src={urlToImage}
                         width={400}
                     />
-                    <p className="w-full max-w-lg truncate">
-                        Shimmer is a stunning new framework for creating expressive and elegant designs. With its sleek components
-                        and delightful interactions, Shimmer makes it easy to craft web experiences that shine.
+                    <p className="w-full max-w-lg">
+                        {description.slice(0, 80)}...
                     </p>
                 </CardContent>
             </div>

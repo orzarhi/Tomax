@@ -3,9 +3,10 @@ import { useNews } from '@/hooks/use-news';
 import { NewsType } from '@/types/news';
 
 export const Home = () => {
-    const { data, isLoading } = useNews();
+    const { mutate: news, isPending, data } = useNews();
+    console.log("🚀 ~ Home ~ data:", data)
 
-    if (isLoading) {
+    if (isPending) {
         return (
             <div className="flex flex-wrap gap-4 p-2 mt-8">
                 {Array(9).fill(0).map((_, i) => (
@@ -19,9 +20,9 @@ export const Home = () => {
         <main>
             <InputSearch
                 placeholder="Search Text..."
-                className='w-3/5 px-4 py-2 mt-4 mb-8'
+                className='w-1/2 px-4 py-2 mt-4 mb-8'
             />
-            <Badges />
+            <Badges news={news} />
             <h1 className='my-4 text-4xl font-bold'>News</h1>
             <article className='flex flex-wrap gap-2'>
                 {data?.map((article: NewsType) => (

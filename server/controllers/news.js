@@ -2,6 +2,8 @@ const { api, AxiosError } = require('../lib/connect');
 
 const getNews = async (req, res) => {
     try {
+        const { category } = req.params;
+
         const { data } = await api.get();
 
         return res.status(200).json(data.articles.slice(0, 60));

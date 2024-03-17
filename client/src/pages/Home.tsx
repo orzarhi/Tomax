@@ -1,4 +1,4 @@
-import { CardDisplay, InputSearch, SkeletonCard } from '@/components';
+import { Badges, CardDisplay, InputSearch, SkeletonCard } from '@/components';
 import { useNews } from '@/hooks/use-news';
 import { NewsType } from '@/types/news';
 
@@ -18,9 +18,11 @@ export const Home = () => {
     return (
         <main>
             <InputSearch
-                placeholder="Search for a news article..."
+                placeholder="Search Text..."
                 className='w-3/5 px-4 py-2 mt-4 mb-8'
             />
+            <Badges />
+            <h1 className='my-4 text-4xl font-bold'>News</h1>
             <article className='flex flex-wrap gap-2'>
                 {data?.map((article: NewsType) => (
                     <CardDisplay

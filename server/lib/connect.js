@@ -2,7 +2,7 @@ const axios = require('axios');
 const { AxiosError } = axios;
 
 const api = axios.create({
-    baseURL: `https://${process.env.SECRET_URL}${process.env.SECRET_COMPANY}`,
+    baseURL: process.env.BASE_URL,
     withCredentials: true,
     headers: {
         "Content-type": "application/json",

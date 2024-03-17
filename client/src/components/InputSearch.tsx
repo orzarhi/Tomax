@@ -1,10 +1,16 @@
+import { cn } from "@/lib/utils"
 import { Input } from "./ui/input"
 
-export const InputSearch = () => {
+interface InputSearchProps {
+    className?: string
+    placeholder: string
+}
+
+export const InputSearch = ({ className, placeholder }: InputSearchProps) => {
     return (
         <Input
-            className="w-full max-w-sm mx-auto"
-            placeholder="Search"
+            className={cn('', className)}
+            placeholder={placeholder}
         />
     )
 }

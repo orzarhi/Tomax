@@ -1,12 +1,19 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
-export const CardDisplay = () => {
+interface CardDisplayProps {
+    title: string;
+    description: string;
+    urlToImage: string;
+
+}
+
+export const CardDisplay = ({ title, description, urlToImage }: CardDisplayProps) => {
     return (
         <Card className="w-full max-w-sm mx-auto">
             <div className="p-4">
                 <CardHeader className="pb-6">
-                    <CardTitle>Introducing Shimmer</CardTitle>
+                    <CardTitle>{title}</CardTitle>
                     <CardDescription>A beautiful new design framework</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -15,7 +22,7 @@ export const CardDisplay = () => {
                         alt="Cover image"
                         className="object-cover overflow-hidden rounded-lg aspect-video"
                         height={200}
-                        src="https://fakeimg.pl/350x200/ff0000/000"
+                        src={urlToImage}
                         width={400}
                     />
                     <p className="w-full max-w-lg truncate">

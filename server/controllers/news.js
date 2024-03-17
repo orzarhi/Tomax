@@ -4,7 +4,7 @@ const getNews = async (req, res) => {
     try {
         const { data } = await api.get();
 
-        return res.status(200).json(data.articles.slice(0, 5));
+        return res.status(200).json(data.articles.slice(0, 6));
 
     } catch (err) {
         if (err instanceof AxiosError) {

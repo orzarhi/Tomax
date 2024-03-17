@@ -12,5 +12,5 @@ app.use(cors({
 app.use('/api', require("./routers"));
 
 app.listen(process.env.PORT || 5000, () => {
-    console.log("Server running on port 3000");
+    console.log("Server running on port 5000");
 });

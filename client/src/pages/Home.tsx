@@ -46,7 +46,7 @@ export const Home = () => {
         <main>
             <InputSearch
                 placeholder="Search Text..."
-                className='w-1/2 px-4 py-2 mt-4 mb-8'
+                className='w-full px-4 py-2 mt-4 mb-8 sm:w-1/2'
                 setSearchText={setSearchText}
             />
             {!isDataEmpty && <Badges

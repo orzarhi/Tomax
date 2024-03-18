@@ -1,14 +1,18 @@
 import { chooseCategory, getNews } from "@/api/news"
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 export const useNews = () =>
-    useQuery({
-        queryKey: ["get-news"],
-        queryFn: getNews,
+    useInfiniteQuery({
+        queryKey: ['news'],
+        queryFn: ({ pageParam }: any) => getNews(pageParam),
+        initialPageParam: 1,
+        getNextPageParam: (pages) => {
+            const { totalPages, currentPage } = pages;
+            return totalPages ? currentPage + 1 : undefined
+        },
         staleTime: Infinity
     })
-
 
 export const useChooseCategory = () =>
     useMutation({

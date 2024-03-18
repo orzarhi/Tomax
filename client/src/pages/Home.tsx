@@ -1,21 +1,32 @@
-import { Badges, CardDisplay, InputSearch, SkeletonCard } from '@/components';
+import { Badges, CardDisplay, InputSearch, SkeletonCard, Spinner } from '@/components';
 import { useDebounce } from '@/hooks/use-debounce';
 import { useChooseCategory, useNews } from '@/hooks/use-news';
 import { NewsType } from '@/types/news';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 export const Home = () => {
     const [searchText, setSearchText] = useState<string>('')
 
     const debouncedSearch = useDebounce(searchText);
     const { mutate: chooseCategory, data, isPending } = useChooseCategory();
-    const { data: news, isLoading } = useNews();
+    console.log("🚀 ~ Home ~ data:", data)
 
+    const { ref, inView } = useInView({ threshold: 0 });
 
-    const filteredData = news?.items?.filter((item: NewsType) => {
+    const { data: news, isLoading, isError, fetchNextPage, hasNextPage } = useNews()
+
+    const itemsData = news?.pages.map((page: NewsType) => page.items).flat();
+
+    const filteredData = itemsData?.filter((item: NewsType) => {
         return item.title.toLowerCase().includes(debouncedSearch.toLocaleLowerCase())
     })
-    const isDataEmpty = !filteredData?.length && !isLoading && !isPending;
+
+    const isDataEmpty = !itemsData?.length && !isLoading && !isPending;
+
+    useEffect(() => {
+        if (inView && hasNextPage && !searchText) fetchNextPage()
+    }, [inView, hasNextPage, fetchNextPage])
 
     if (isLoading) {
         return (
@@ -25,6 +36,10 @@ export const Home = () => {
                 ))}
             </div>
         )
+    }
+
+    if (isError) {
+        return <h1 className='mt-12 text-3xl font-medium'>Something went wrong!</h1>
     }
 
     return (
@@ -44,6 +59,10 @@ export const Home = () => {
                     />
                 ))}
             </article>
+            {!searchText &&
+                <div ref={ref}>
+                    <Spinner className='w-8 h-8' />
+                </div>}
         </main>
     )
 }

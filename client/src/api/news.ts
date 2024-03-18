@@ -1,8 +1,8 @@
 import axios from './axios';
 
-export const getNews = async () => {
+export const getNews = async (page: number) => {
     try {
-        const { data } = await axios.get('/get-news');
+        const { data } = await axios.get(`/get-news/${page}`);
         return data;
     } catch (err) {
         console.error(err);

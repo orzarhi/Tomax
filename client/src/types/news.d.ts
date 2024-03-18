@@ -7,4 +7,6 @@ export type NewsType = {
     content: string;
     url: string;
     urlToImage: string;
+    items: NewsType[];
+    text: string;
 }

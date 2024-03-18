@@ -10,13 +10,16 @@ export const Details = ({ }) => {
     const navigate = useNavigate()
 
     const { data, isLoading } = useNews()
+    console.log("🚀 ~ Details ~ data:", data)
 
-    const item = data?.items?.find((item: NewsType) => item.id === id)
+    const itemsData = data?.pages.map((page: NewsType) => page.items).flat();
 
+    const item = itemsData?.find((item: NewsType) => item.id === id)
     console.log(item)
-    if (isLoading) {
-        return <Spinner />
-    }
+    // show all content
+
+
+    if (isLoading) return <Spinner className='w-12 h-12' />
 
     return (
         <main className="flex flex-col p-4">
@@ -31,7 +34,7 @@ export const Details = ({ }) => {
             />
             <p className="mt-4 text-lg">{item?.description}</p>
             <p className="mt-4 text-lg">{item?.content}</p>
-            <p className="mt-4 text-lg">{format(item?.publishedAt, 'dd/MM/yyyy')}</p>
+            <p className="mt-4 text-lg">{format(item?.publishedAt as string, 'dd/MM/yyyy')}</p>
             <ArrowRight
                 size={32}
                 className='mx-auto mt-24 cursor-pointer text-zinc-700 hover:text-black'

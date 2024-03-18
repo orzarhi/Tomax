@@ -5,8 +5,8 @@ const paginateAndRespond = (items, page, pageSize = 10) => {
 
     return {
         items: paginatedItems,
-        currentPage: page,
-        totalPages: Math.ceil(items.length / pageSize)
+        currentPage: +page,
+        totalPages: +Math.ceil(items.length / pageSize)
     };
 }
 

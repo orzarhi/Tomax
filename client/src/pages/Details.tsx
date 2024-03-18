@@ -10,14 +10,10 @@ export const Details = ({ }) => {
     const navigate = useNavigate()
 
     const { data, isLoading } = useNews()
-    console.log("🚀 ~ Details ~ data:", data)
 
     const itemsData = data?.pages.map((page: NewsType) => page.items).flat();
 
     const item = itemsData?.find((item: NewsType) => item.id === id)
-    console.log(item)
-    // show all content
-
 
     if (isLoading) return <Spinner className='w-12 h-12' />
 

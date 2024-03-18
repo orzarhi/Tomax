@@ -7,16 +7,12 @@ const { v4: uuidv4 } = require('uuid');
 const getNews = async (req, res) => {
     try {
         const { page } = req.params;
-        console.log("🚀 ~ getNews ~ page:", page)
 
         const { data } = await api.get('sports&from=2024-03-17&sortBy=publishedAt');
         const items = data.articles;
 
         // Add an id to each item
-        items.forEach((item) => {
-            item.id = uuidv4();
-
-        });
+        items.forEach((item) => item.id = uuidv4());
 
         const pageSize = 10;
         const paginatedResponse = paginateAndRespond(items, page, pageSize);
@@ -39,6 +35,8 @@ const chooseCategory = async (req, res) => {
 
         const { data } = await api.get(`${category}&from=2024-03-17&sortBy=publishedAt`);
         const items = data.articles;
+        // Add an id to each item
+        items.forEach((item) => item.id = uuidv4());
 
         const pageSize = 10;
         const paginatedResponse = paginateAndRespond(items, page, pageSize);

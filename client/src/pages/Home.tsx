@@ -9,14 +9,14 @@ export const Home = () => {
     const [searchText, setSearchText] = useState<string>('')
 
     const debouncedSearch = useDebounce(searchText);
-    const { mutate: chooseCategory, data, isPending } = useChooseCategory();
-    console.log("🚀 ~ Home ~ data:", data)
 
     const { ref, inView } = useInView({ threshold: 0 });
 
-    const { data: news, isLoading, isError, fetchNextPage, hasNextPage } = useNews()
+    const { mutate: chooseCategory, data: chooseCategoryData, isPending } = useChooseCategory();
 
-    const itemsData = news?.pages.map((page: NewsType) => page.items).flat();
+    const { data: news, isLoading, fetchNextPage, hasNextPage } = useNews()
+
+    const itemsData = chooseCategoryData?.items ?? news?.pages.map((page: NewsType) => page.items).flat() as NewsType[];
 
     const filteredData = itemsData?.filter((item: NewsType) => {
         return item.title.toLowerCase().includes(debouncedSearch.toLocaleLowerCase())
@@ -38,10 +38,6 @@ export const Home = () => {
         )
     }
 
-    if (isError) {
-        return <h1 className='mt-12 text-3xl font-medium'>Something went wrong!</h1>
-    }
-
     return (
         <main>
             <InputSearch
@@ -49,7 +45,7 @@ export const Home = () => {
                 className='w-1/2 px-4 py-2 mt-4 mb-8'
                 setSearchText={setSearchText}
             />
-            {!isDataEmpty && <Badges chooseCategory={chooseCategory} />}
+            {!isDataEmpty && <Badges chooseCategory={chooseCategory} isPending={isPending} />}
             {!isDataEmpty ? <h1 className='my-4 text-4xl font-bold'>News</h1> : <h1 className='mt-12 text-3xl font-medium'>No News Found ☹</h1>}
             <article className='flex flex-wrap gap-2'>
                 {filteredData?.map((item: NewsType) => (

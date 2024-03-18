@@ -15,7 +15,7 @@ export const Home = () => {
 
     const [storedValue, setValue] = useLocalStorage('category', 'sports')
 
-    const { data: news, isLoading, fetchNextPage, hasNextPage, refetch } = useNews(storedValue)
+    const { data: news, isLoading, fetchNextPage, hasNextPage, refetch, isFetching } = useNews(storedValue)
 
     const itemsData = news?.pages.map((page: NewsType) => page.items).flat() as NewsType[];
 
@@ -50,8 +50,10 @@ export const Home = () => {
                 setSearchText={setSearchText}
             />
             {!isDataEmpty && <Badges
+                key={storedValue}
                 setValue={setValue}
                 storedValue={storedValue}
+                isFetching={isFetching}
             />}
             {!isDataEmpty ? <h1 className='my-4 text-4xl font-bold'>News</h1> : <h1 className='mt-12 text-3xl font-medium'>No News Found ☹</h1>}
             <article className='flex flex-wrap gap-2'>

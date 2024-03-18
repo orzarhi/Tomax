@@ -1,11 +1,13 @@
 import { Button } from "./ui/button";
+import { Spinner } from "./ui/spinner";
 
 interface BadgesProps {
     setValue: (value: string | ((val: string) => string)) => void
     storedValue: string
+    isFetching?: boolean
 }
 
-export const Badges = ({ setValue, storedValue }: BadgesProps) => {
+export const Badges = ({ setValue, storedValue, isFetching }: BadgesProps) => {
     const categoryList = [
         { value: 'technology', className: 'text-blue-800 bg-blue-100 badge hover:bg-blue-200' },
         { value: 'science', className: 'text-green-800 bg-green-100 badge hover:bg-green-200' },
@@ -30,7 +32,7 @@ export const Badges = ({ setValue, storedValue }: BadgesProps) => {
                     className={className}
                     disabled={storedValue === value}
                 >
-                    {value}
+                    {isFetching && storedValue == value ? 'Loading...' : value}
                 </Button>
             ))}
         </div>

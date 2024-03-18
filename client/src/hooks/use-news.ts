@@ -5,7 +5,7 @@ import { toast } from "sonner"
 export const useNews = () =>
     useMutation({
         mutationKey: ["news"],
-        mutationFn: (category: string) => getNews(category),
+        mutationFn: (payload: { category: string, page: number }) => getNews(payload),
         onError: (err: Error) => {
             toast.error(err.message)
         }

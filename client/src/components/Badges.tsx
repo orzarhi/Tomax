@@ -2,7 +2,10 @@ import { UseMutateFunction } from "@tanstack/react-query";
 import { Button } from "./ui/button";
 
 interface BadgesProps {
-    chooseCategory: UseMutateFunction<any, unknown, string, unknown>;
+    chooseCategory: UseMutateFunction<any, Error, {
+        category: string;
+        page: number;
+    }, unknown>
 }
 
 export const Badges = ({ chooseCategory }: BadgesProps) => {
@@ -16,7 +19,10 @@ export const Badges = ({ chooseCategory }: BadgesProps) => {
         { value: 'politics', className: 'text-pink-800 bg-pink-100 badge hover:bg-pink-200' }
     ]
 
-    const handleCategory = (category: string) => chooseCategory(category);
+    const handleCategory = (category: string) => {
+        const payload = { category, page: 1 };
+        chooseCategory(payload);
+    };
 
     return (
         <div className='flex flex-wrap gap-4'>

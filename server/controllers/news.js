@@ -6,20 +6,19 @@ const getNews = async (req, res) => {
     try {
         const { category, page } = newsValidator.parse(req.body);
 
-
-
         const { data } = await api.get(`${category ?? 'sports'}&from=2024-02-17&sortBy=publishedAt`);
+        const items = data.articles;
 
         const pageSize = 10;
         const startIndex = (page - 1) * pageSize;
         const endIndex = page * pageSize;
 
-        const paginatedItems = data.articles.slice(startIndex, endIndex);
+        const paginatedItems = items.slice(startIndex, endIndex);
 
         return res.status(200).json({
             items: paginatedItems,
             currentPage: page,
-            totalPages: Math.ceil(data.articles.length / pageSize)
+            totalPages: Math.ceil(items.length / pageSize)
         });
 
     } catch (err) {

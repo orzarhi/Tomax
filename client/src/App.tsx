@@ -1,19 +1,14 @@
-import { useState } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import { Home } from './pages'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { Toaster } from './components/ui/sonner'
+import { Details, Home } from './pages'
 
 export const App = () => {
-  const [queryClient] = useState(() => new QueryClient())
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <Home />
-      <Toaster />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/details/:id" element={<Details />} />
+    </Routes>
 
   )
 }

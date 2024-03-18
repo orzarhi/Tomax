@@ -15,7 +15,6 @@ export const Home = () => {
     const filteredData = news?.items?.filter((item: NewsType) => {
         return item.title.toLowerCase().includes(debouncedSearch.toLocaleLowerCase())
     })
-
     const isDataEmpty = !filteredData?.length && !isLoading && !isPending;
 
     if (isLoading) {
@@ -38,12 +37,10 @@ export const Home = () => {
             {!isDataEmpty && <Badges chooseCategory={chooseCategory} />}
             {!isDataEmpty ? <h1 className='my-4 text-4xl font-bold'>News</h1> : <h1 className='mt-12 text-3xl font-medium'>No News Found ☹</h1>}
             <article className='flex flex-wrap gap-2'>
-                {filteredData?.map((item: NewsType, i: number) => (
+                {filteredData?.map((item: NewsType) => (
                     <CardDisplay
-                        key={`${i}-${item.title}`}
-                        title={item.title}
-                        description={item.description}
-                        urlToImage={item.urlToImage}
+                        key={item.id}
+                        item={item}
                     />
                 ))}
             </article>

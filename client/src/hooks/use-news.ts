@@ -5,7 +5,8 @@ import { toast } from "sonner"
 export const useNews = () =>
     useQuery({
         queryKey: ["get-news"],
-        queryFn: getNews
+        queryFn: getNews,
+        staleTime: Infinity
     })
 
 

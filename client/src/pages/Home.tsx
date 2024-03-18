@@ -1,5 +1,6 @@
 import { Badges, CardDisplay, InputSearch, SkeletonCard, Spinner } from '@/components';
 import { useDebounce } from '@/hooks/use-debounce';
+import { useLocalStorage } from '@/hooks/use-localStorage';
 import { useNews } from '@/hooks/use-news';
 import { NewsType } from '@/types/news';
 import { useEffect, useState } from 'react';
@@ -7,13 +8,14 @@ import { useInView } from 'react-intersection-observer';
 
 export const Home = () => {
     const [searchText, setSearchText] = useState<string>('')
-    const [chooseCategory, setChooseCategory] = useState<string>('sports')
 
     const debouncedSearch = useDebounce(searchText);
 
     const { ref, inView } = useInView({ threshold: 0 });
 
-    const { data: news, isLoading, fetchNextPage, hasNextPage, refetch } = useNews(chooseCategory)
+    const [storedValue, setValue] = useLocalStorage('category', 'sports')
+
+    const { data: news, isLoading, fetchNextPage, hasNextPage, refetch } = useNews(storedValue)
 
     const itemsData = news?.pages.map((page: NewsType) => page.items).flat() as NewsType[];
 
@@ -21,14 +23,14 @@ export const Home = () => {
         return item.title.toLowerCase().includes(debouncedSearch.toLocaleLowerCase())
     })
 
-    const isDataEmpty = !itemsData?.length && !isLoading;
+    const isDataEmpty = !filteredData?.length && !isLoading;
 
     useEffect(() => {
         if (inView && hasNextPage && !searchText) fetchNextPage()
 
-        if (chooseCategory && !inView) refetch()
+        if (storedValue && !inView) refetch()
 
-    }, [inView, hasNextPage, fetchNextPage, chooseCategory])
+    }, [inView, hasNextPage, fetchNextPage, storedValue])
 
     if (isLoading) {
         return (
@@ -48,8 +50,8 @@ export const Home = () => {
                 setSearchText={setSearchText}
             />
             {!isDataEmpty && <Badges
-                setChooseCategory={setChooseCategory}
-                chooseCategory={chooseCategory}
+                setValue={setValue}
+                storedValue={storedValue}
             />}
             {!isDataEmpty ? <h1 className='my-4 text-4xl font-bold'>News</h1> : <h1 className='mt-12 text-3xl font-medium'>No News Found ☹</h1>}
             <article className='flex flex-wrap gap-2'>

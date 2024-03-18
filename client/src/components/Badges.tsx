@@ -1,12 +1,11 @@
-import { Dispatch, SetStateAction } from 'react';
 import { Button } from "./ui/button";
 
 interface BadgesProps {
-    setChooseCategory: Dispatch<SetStateAction<string>>
-    chooseCategory?: string
+    setValue: (value: string | ((val: string) => string)) => void
+    storedValue: string
 }
 
-export const Badges = ({ setChooseCategory, chooseCategory }: BadgesProps) => {
+export const Badges = ({ setValue, storedValue }: BadgesProps) => {
     const categoryList = [
         { value: 'technology', className: 'text-blue-800 bg-blue-100 badge hover:bg-blue-200' },
         { value: 'science', className: 'text-green-800 bg-green-100 badge hover:bg-green-200' },
@@ -18,7 +17,9 @@ export const Badges = ({ setChooseCategory, chooseCategory }: BadgesProps) => {
     ];
 
 
-    const handleCategory = (category: string) => setChooseCategory(category);
+    const handleCategory = (category: string) => {
+        if (category) setValue(category);
+    };
 
     return (
         <div className='flex flex-wrap gap-4'>
@@ -27,7 +28,7 @@ export const Badges = ({ setChooseCategory, chooseCategory }: BadgesProps) => {
                     key={i}
                     onClick={() => handleCategory(value)}
                     className={className}
-                    disabled={chooseCategory === value}
+                    disabled={storedValue === value}
                 >
                     {value}
                 </Button>

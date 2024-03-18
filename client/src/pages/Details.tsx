@@ -1,4 +1,5 @@
 import { Spinner } from '@/components';
+import { useLocalStorage } from '@/hooks/use-localStorage';
 import { useNews } from '@/hooks/use-news';
 import { NewsType } from '@/types/news';
 import { format } from 'date-fns';
@@ -9,7 +10,9 @@ export const Details = ({ }) => {
     const { id } = useParams();
     const navigate = useNavigate()
 
-    const { data, isLoading } = useNews()
+    const [storedValue] = useLocalStorage('category')
+
+    const { data, isLoading } = useNews(storedValue as string)
 
     const itemsData = data?.pages.map((page: NewsType) => page.items).flat();
 
@@ -36,7 +39,6 @@ export const Details = ({ }) => {
                 className='mx-auto mt-24 cursor-pointer text-zinc-700 hover:text-black'
                 onClick={() => navigate(-1)}
             />
-
         </main>
     )
 }

@@ -1,17 +1,9 @@
 import axios from './axios';
 
-export const getNews = async (page: number) => {
+export const getNews = async (request: { category: string, page: number }) => {
+    const { category, page } = request;
     try {
-        const { data } = await axios.get(`/get-news/${page}`);
-        return data;
-    } catch (err) {
-        console.error(err);
-    }
-}
-
-export const chooseCategory = async (request: { category: string, page: number }) => {
-    try {
-        const { data } = await axios.post('/choose-category', request);
+        const { data } = await axios.get(`/get-news/${page}/${category}`);
         return data;
     } catch (err) {
         console.error(err);

@@ -1,16 +1,12 @@
-import { useState } from 'react';
-import { UseMutateFunction } from "@tanstack/react-query";
+import { Dispatch, SetStateAction } from 'react';
 import { Button } from "./ui/button";
 
 interface BadgesProps {
-    chooseCategory: UseMutateFunction<any, Error, {
-        category: string;
-        page: number;
-    }, unknown>
-    isPending?: boolean
+    setChooseCategory: Dispatch<SetStateAction<string>>
+    chooseCategory?: string
 }
 
-export const Badges = ({ chooseCategory, isPending }: BadgesProps) => {
+export const Badges = ({ setChooseCategory, chooseCategory }: BadgesProps) => {
     const categoryList = [
         { value: 'technology', className: 'text-blue-800 bg-blue-100 badge hover:bg-blue-200' },
         { value: 'science', className: 'text-green-800 bg-green-100 badge hover:bg-green-200' },
@@ -21,13 +17,8 @@ export const Badges = ({ chooseCategory, isPending }: BadgesProps) => {
         { value: 'politics', className: 'text-pink-800 bg-pink-100 badge hover:bg-pink-200' }
     ];
 
-    const [clickedCategory, setClickedCategory] = useState<string | null>(null);
 
-    const handleCategory = (category: string) => {
-        const payload = { category, page: 1 };
-        chooseCategory(payload);
-        setClickedCategory(category);
-    };
+    const handleCategory = (category: string) => setChooseCategory(category);
 
     return (
         <div className='flex flex-wrap gap-4'>
@@ -36,7 +27,7 @@ export const Badges = ({ chooseCategory, isPending }: BadgesProps) => {
                     key={i}
                     onClick={() => handleCategory(value)}
                     className={className}
-                    disabled={isPending || clickedCategory === value}
+                    disabled={chooseCategory === value}
                 >
                     {value}
                 </Button>

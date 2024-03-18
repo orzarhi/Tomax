@@ -6,6 +6,8 @@ const getNews = async (req, res) => {
     try {
         const { category, page } = newsValidator.parse(req.body);
 
+
+
         const { data } = await api.get(`${category ?? 'sports'}&from=2024-02-17&sortBy=publishedAt`);
 
         const pageSize = 10;

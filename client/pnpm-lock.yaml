@@ -47,9 +47,6 @@ dependencies:
   tailwindcss-animate:
     specifier: ^1.0.7
     version: 1.0.7(tailwindcss@3.4.1)
-  uuid:
-    specifier: ^9.0.1
-    version: 9.0.1
 
 devDependencies:
   '@types/node':
@@ -2477,11 +2474,6 @@ packages:
     resolution: {integrity: sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==}
     dependencies:
       inherits: 2.0.3
-    dev: false
-
-  /uuid@9.0.1:
-    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
-    hasBin: true
     dev: false
 
   /vite@5.1.6(@types/node@20.11.28):

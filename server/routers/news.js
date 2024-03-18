@@ -1,6 +1,7 @@
 const router = require("express").Router();
-const { getNews } = require("../controllers/news");
+const { getNews, chooseCategory } = require("../controllers/news");
 
-router.post('/news', getNews)
+router.get('/get-news', getNews)
+router.post('/choose-category', chooseCategory)
 
 module.exports = router;

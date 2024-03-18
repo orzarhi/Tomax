@@ -21,8 +21,9 @@ export const CardDisplay = ({ title, description, urlToImage }: CardDisplayProps
                         alt="Cover image"
                         className="object-cover overflow-hidden rounded-lg aspect-video"
                         height={200}
-                        src={urlToImage}
+                        src={urlToImage ?? 'https://via.placeholder.com/400x200?text=No+Image+Found'}
                         width={400}
+                        loading='lazy'
                     />
                     <p className="w-full max-w-lg">
                         {description.slice(0, 80)}...

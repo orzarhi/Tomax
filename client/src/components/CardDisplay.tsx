@@ -25,6 +25,10 @@ export const CardDisplay = ({ item: { title, description, urlToImage, id, publis
                             src={urlToImage ?? 'https://via.placeholder.com/400x200?text=No+Image+Found'}
                             width={400}
                             loading='lazy'
+                            onError={({ currentTarget }) => {
+                                currentTarget.onerror = null;
+                                currentTarget.src = 'https://via.placeholder.com/400x200?text=No+Image+Found';
+                            }}
                         />
                         <p className="w-full max-w-lg">
                             {description.slice(0, 80)}...

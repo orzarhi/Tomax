@@ -30,6 +30,10 @@ export const Details = ({ }) => {
                 src={item?.urlToImage ?? 'https://via.placeholder.com/400x200?text=No+Image+Found'}
                 width={400}
                 loading='lazy'
+                onError={({ currentTarget }) => {
+                    currentTarget.onerror = null;
+                    currentTarget.src = 'https://via.placeholder.com/400x200?text=No+Image+Found';
+                }}
             />
             <p className="mt-4 text-lg">{item?.description}</p>
             <p className="mt-4 text-lg">{item?.content}</p>

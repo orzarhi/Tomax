@@ -14,7 +14,7 @@ const getNews = async (req, res) => {
         // Add an id to each item
         items.forEach((item) => item.id = uuidv4());
 
-        const pageSize = 10;
+        const pageSize = 9;
         const paginatedResponse = paginateAndRespond(items, page, pageSize);
 
         return res.status(200).json(paginatedResponse);

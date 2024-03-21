@@ -34,7 +34,7 @@ export const Home = () => {
 
     if (isLoading) {
         return (
-            <div className="flex flex-wrap gap-4 p-2 mt-8">
+            <div className="flex flex-wrap gap-4 p-2 mt-20">
                 {Array(9).fill(0).map((_, i) => (
                     <SkeletonCard key={i} />
                 ))}
